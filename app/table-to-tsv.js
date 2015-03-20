@@ -1,5 +1,5 @@
 $(function() {
-  var domain = 'https://en.wikipedia.org/';
+  var domain = 'https://en.wikipedia.org';
   var delim = '&#9;';
   var table = $('table');
   var tsv = '';
@@ -66,7 +66,7 @@ $(function() {
           }
           tsv += author + delim;
         } else {
-          tsv += colName + delim;
+          tsv += 'Author(s)' + delim;
         }
 
         if (wiki && wiki.length) {
