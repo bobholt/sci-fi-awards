@@ -14,13 +14,21 @@ $(function() {
     var cells = $(tr).find('th,td');
     var numCells = cells.length;
     if (numCells > 4) {
-      year = $(tr).find('th').eq(0).text().trim();
+      if ($(tr).find('th').eq(0).find('a').length) {
+        year = $(tr).find('th').eq(0).find('a').text().trim();
+      } else {
+        year = $(tr).find('th').eq(0).text().trim();
+      }
     }
 
     if (numCells === 5) {
       yearAwarded = year;
+      if (yearAwarded === 'Year') {
+        yearAwarded = 'Year awarded';
+      }
       tsv += yearAwarded + delim;
     }
+
     if (numCells === 6) {
       yearAwarded = $(tr).find('th').eq(1).text().trim();
     }
@@ -44,10 +52,10 @@ $(function() {
       }
 
       var wiki = $(td).find('a').attr('href');
-      var colName = table.find('tr').eq(0).find('th').eq(i).text().trim();
+      var colName = table.find('thead tr').eq(0).find('th').eq(i).text().trim();
       var isWinner;
 
-      if (colName === 'Author(s)') {
+      if (colName === 'Author(s)' || colName === 'Author') {
         $(td).find('.vcard').remove();
         author = $(td).text().trim();
         isWinner = author.indexOf('*') !== -1;
@@ -114,7 +122,11 @@ $(function() {
           tsv += delim;
         }
       } else if (colName !== 'Ref.') {
-        tsv += $(td).text().trim() + delim;
+        if ($(td).find('a').length) {
+          tsv += $(td).find('a').text().trim() + delim;
+        } else {
+          tsv += $(td).text().trim() + delim;
+        }
       }
     });
 
