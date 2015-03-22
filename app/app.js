@@ -1,4 +1,5 @@
 (function() {
+
   queue()
     .defer(d3.tsv, '../data/hugo-novel-retro.tsv', normalizeColumnNames)
     .defer(d3.tsv, '../data/hugo-novel.tsv', normalizeColumnNames)
@@ -93,7 +94,17 @@
       .key(function(d) { return d.author; })
       .entries(allAwards);
 
-    console.log(_.pluck(awardsByAuthor, 'key'));
-    // console.log(awardsByAuthor[awardsByAuthor.length - 1]);
+    var ul = document.getElementsByClassName('authors')[0];
+
+    var templateString = '<li><%= key %></li>'
+    var templateFunction = _.template(templateString);
+    var list = '';
+
+    awardsByAuthor.forEach(function(author) {
+      list += templateFunction(author);
+    });
+
+    ul.innerHTML = list;
+
   }
 }());
