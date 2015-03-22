@@ -89,7 +89,11 @@
       return x < y ? -1 : x > y ? 1 : 0;
     });
 
-    console.log(allAwards[0]);
-    console.log(allAwards[allAwards.length - 1]);
+    var awardsByAuthor = d3.nest()
+      .key(function(d) { return d.author; })
+      .entries(allAwards);
+
+    console.log(_.pluck(awardsByAuthor, 'key'));
+    // console.log(awardsByAuthor[awardsByAuthor.length - 1]);
   }
 }());
