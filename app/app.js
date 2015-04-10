@@ -32,6 +32,9 @@
     .defer(d3.tsv, '../data/nebula-novelette.tsv', normalizeColumnNames)
     .defer(d3.tsv, '../data/nebula-novella.tsv', normalizeColumnNames)
     .defer(d3.tsv, '../data/nebula-short-story.tsv', normalizeColumnNames)
+    .defer(d3.tsv, '../data/locus-novel.tsv', normalizeColumnNames)
+    .defer(d3.tsv, '../data/locus-scifi-novel.tsv', normalizeColumnNames)
+    .defer(d3.tsv, '../data/locus-fantasy-novel.tsv', normalizeColumnNames)
     .await(analyze);
 
   function normalizeColumnNames(d) {
@@ -182,7 +185,10 @@
     nebulaNovelOrig,
     nebulaNoveletteOrig,
     nebulaNovellaOrig,
-    nebulaShortStoryOrig
+    nebulaShortStoryOrig,
+    locusNovelOrig,
+    locusScifiNovelOrig,
+    locusFantasyNovelOrig
   ) {
     if (error) {
       console.log(error);
@@ -202,6 +208,10 @@
     var nebulaNovella = nebulaNovellaOrig.map(addAwardCols.bind(null, 'Nebula', 'Novella'));
     var nebulaShortStory = nebulaShortStoryOrig.map(addAwardCols.bind(null, 'Nebula', 'Short Story'));
 
+    var locusNovel = locusNovelOrig.map(addAwardCols.bind(null, 'Locus', 'Novel'));
+    var locusScifiNovel = locusScifiNovelOrig.map(addAwardCols.bind(null, 'Locus', 'Novel'))
+    var locusFantasyNovel = locusFantasyNovelOrig.map(addAwardCols.bind(null, 'Locus', 'Novel'))
+
     var allAwards = d3.merge([
       hugoNovelRetro,
       hugoNovel,
@@ -214,7 +224,10 @@
       nebulaNovel,
       nebulaNovelette,
       nebulaNovella,
-      nebulaShortStory
+      nebulaShortStory,
+      locusNovel,
+      locusScifiNovel,
+      locusFantasyNovel
     ]);
 
     allAwards.sort(function(a, b) {
